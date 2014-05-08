@@ -23,22 +23,25 @@ try {
   
   $st = $db->query($sql);
   $row = $st->fetch();
-  
+  $item = $row;
+  $varianti = $item['variante'];
+  while ($row = $st->fetch()) {
+    $varianti .= ', '.$row['variante'];
+  }
+  $item['variante'] = $varianti;
 }
   catch (PDOException $e) {
     print $e->getMessage();
 }
 ?>
-<h1>Scheda Prodotto: <?php echo $row['nome']; ?></h1>
-<p>Prezzo: <?php echo $row['prezzo']; ?></p>
-<p>Venduti: <?php echo $row['venduti']; ?></p>
-<p>Disp. Dal: <?php echo $row['dataarrivo']; ?></p>
-<p>Varianti: <?php echo $row['variante']; ?>
+<h1>Scheda Prodotto: <?php echo $item['nome']; ?></h1>
+<p>Prezzo: <?php echo $item['prezzo']; ?></p>
+<p>Venduti: <?php echo $item['venduti']; ?></p>
+<p>Disp. Dal: <?php echo $item['dataarrivo']; ?></p>
+<p>Varianti: <?php echo $item['variante']; ?>
     
 <?php  
-    while ($row = $st->fetch()) {
-          echo ', '.$row['variante'];
-        }
+    
     $time_taken = microtime(true) - $start;
 ?>
 </p>
