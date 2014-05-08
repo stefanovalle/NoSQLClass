@@ -70,7 +70,7 @@ try {
         nome character varying NOT NULL,
         prezzo numeric(6,2) NOT NULL,
         venduti integer DEFAULT 0 NOT NULL,
-        dataarrivo time with time zone NOT NULL,
+        dataarrivo timestamp with time zone NOT NULL,
         categoria_id integer NOT NULL
     );
     ");
@@ -92,7 +92,7 @@ try {
   
     for ($x=0; $x< 10000; $x++) {
         
-        $categoria = rand(0, (count($categorie))) - 1;
+        $categoria = rand(2, (count($categorie)))-1;
         $prezzo = (rand(1, 200) * 10);
         $venduti = rand (0, 5000);
         $dataarrivo = '2014-05-07 '.rand(1,23).':'.rand(0,59);
