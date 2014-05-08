@@ -1,5 +1,7 @@
 <?php
 
+require 'predis/lib/Predis/Autoloader.php';
+Predis\Autoloader::register();
 
 ini_set('display_errors', 1);
 $dsn = 'pgsql:host=localhost;dbname=ecommerce';
@@ -12,14 +14,26 @@ try {
   $db = new PDO($dsn , 'postgres', 'zf2');
   $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   
-  $memcache = new \Memcached();
-  $memcache->addServer('localhost', 11211) or die ("Could not connect");
+try {
+    $redis = new Predis\Client();
+/*
+    $redis = new PredisClient(array(
+        "scheme" => "tcp",
+        "host" => "127.0.0.1",
+        "port" => 6379));
+*/
+    echo "Successfully connected to Redis";
+}
+catch (Exception $e) {
+    echo "Couldn't connected to Redis";
+    echo $e->getMessage();
+}
   
    $start = microtime(true);
-  
-  $item = $memcache->get($id);
-  
-  if (!$item) {
+ 
+  if (!$redis->exists($id)) {
+      
+    echo "Not cached<br />";
   
     $sql = "SELECT prodotto.*, macrocategoria.nome as macrocategoria, variante.nome as variante,
             categoria.nome as categoria FROM prodotto join categoria on categoria.id = prodotto.categoria_id 
@@ -39,9 +53,13 @@ try {
     
     $item['variante'] = $varianti;
     
-    $memcache->set($id, $item, 10) or die ("Failed to save data at the server");
-
+  } else {
+      $item = json_decode($redis->get($id), true);
   }
+  
+  $data = json_encode($item, true);
+  $redis->set($id, $data) or die ("Failed to save data at the server");
+  // $redis->expireat($id, 1000);
 
   $time_taken = microtime(true) - $start;  
           
