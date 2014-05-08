@@ -86,11 +86,13 @@ try {
     
     $namebase = array('pingo', 'pongo', 'bum', 'bam', 'foo', 
                       'baz', 'bar', 'pogo', 'dogo', 'sole',
-                      'luna', 'volo', 'air', 'fire', 'tee');
+                      'luna', 'volo', 'air', 'fire', 'tee',
+                      'ping', 'lyn', 'chee', 'wire', 'shark',
+                      'goo', 'goose', 'moose', 'sting', 'ray');
     
     $prodottovariante = 0;
   
-    for ($x=0; $x< 10000; $x++) {
+    for ($x=0; $x< 100000; $x++) {
         
         $categoria = rand(2, (count($categorie)))-1;
         $prezzo = (rand(1, 200) * 10);
