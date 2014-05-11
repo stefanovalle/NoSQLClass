@@ -19,8 +19,6 @@ try {
           join variante on prodottovariante.id_variante = variante.id
           WHERE prodotto.id = ". $id ;
 
-  $start = microtime(true);
-  
   $st = $db->query($sql);
   $row = $st->fetch();
   $item = $row;
@@ -34,24 +32,10 @@ try {
     print $e->getMessage();
 }
 ?>
-<h1>Scheda Prodotto: <?php echo $item['nome']; ?></h1>
-<p>Prezzo: <?php echo $item['prezzo']; ?></p>
-<p>Venduti: <?php echo $item['venduti']; ?></p>
-<p>Disp. Dal: <?php echo $item['dataarrivo']; ?></p>
-<p>Varianti: <?php echo $item['variante']; ?>
+<h1>Nome Prodotto: <?php echo $item['nome']; ?></h1>
     
-<?php  
-    
-    $time_taken = microtime(true) - $start;
-?>
-</p>
+<a href="/ordina.php?id=<?php echo $item['id']; ?>">Compra</a>
 
-<?php echo "Time taken: " . $time_taken; ?>
+<br /><br />
 
-<br />
-
-<a href="/carrello.php?id=<?php echo $item['id']; ?>">Ordina prodotto</a>
-
-<br />
-
-<a href="/index.php">Back</a>
+<a href="/detail.php?id=<?php echo $item['id']; ?>">Back</a>
