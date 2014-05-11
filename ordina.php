@@ -47,8 +47,10 @@ try {
                   'cliente' => array('nome' => 'Stefano',
                                      'cognome' => 'Valle'),
                   'prodotti' => array($item['id'] => array('nome'     => $item['nome'],
-                                                           'quantita' => 1)
-                  ));
+                                                           'quantita' => 1,
+                                                           'prezzo'   => $item['prezzo'])),
+                  'totale' => $item['prezzo']
+                  );
     
     // inserimento ordine
     $risultato = $sag->post($dati);
