@@ -17,7 +17,7 @@ $sag->setDatabase('ordini');
 try {
     
     // get dati da vista
-    $risultato = $sag->get('_design/listaordini/_view/listaordini');
+    $risultato = $sag->get('_design/ordini/_view/elenco');
     
     $listaordini = $risultato->body->rows;
     
@@ -25,7 +25,7 @@ try {
     
     //The requested post doesn't exist - oh no!
     if($e->getCode() == "404") {
-        $e = new Exception("That post doesn't exist.");
+        $e = new Exception("Documento inesistente.");
     }
  
     throw $e;

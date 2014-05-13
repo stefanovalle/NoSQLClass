@@ -18,7 +18,7 @@ $sag->setDatabase('ordini');
  
 try {
     
-    // get dati da vista
+    // get dati ordine
     $risultato = $sag->get($id);
     
     $ordine = $risultato->body;
@@ -27,7 +27,7 @@ try {
     
     //The requested post doesn't exist - oh no!
     if($e->getCode() == "404") {
-        $e = new Exception("That post doesn't exist.");
+        $e = new Exception("Documento inesistente.");
     }
  
     throw $e;
